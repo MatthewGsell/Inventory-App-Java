@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Inventory Manager</h1>
+    </div>
+    <div id="maincontainer">
+      <div id="categories">
+        <h2>Categories:</h2>
+        <ul id="categorylist">
+          <li><a href="/">All Categories</a></li>
+          <li th:each="item: ${categories}">
+            <a
+              th:href="@{/reloadcategory(name=${item.name})}"
+              th:text="${item.name}"
+            ></a>
+          </li>
+        </ul>
+        <a id="addcategorybutton" href="/newcategory">Add Category</a>
+        <a id="additembutton" href="/newitem">Add Item</a>
+        <a id="deletecategorybutton" href="/deletecategory">Delete Category</a>
+        <a id="deleteitembutton" href="/deleteitem">Delete Item</a>
+      </div>
+      <div id="itemscontainer">
+        <form action="/newitem" method="post" id="createitemform">
+          <input
+            type="text"
+            placeholder="item name"
+            minlength="1"
+            maxlength="20"
+            id="name"
+            name="name"
+          />
+          <input
+            type="text"
+            placeholder="category"
+            minlength="1"
+            maxlength="30"
+            id="category"
+            name="category"
+          />
+          <textarea
+            placeholder="description"
+            minlength="1"
+            maxlength="200"
+            id="description"
+            name="description"
+          ></textarea>
+          <label for="quantity">Quantity:</label>
+          <input
+            type="number"
+            id="quantity"
+            ,
+            name="quantity"
+            placeholder="0"
+            min="0"
+          />
+          <button type="submit">Add</button>
+        </form>
+        <a href="/" id="home">Home</a>
+        <span th:if="${error}" id="deleteerror">
+          <p th:text="${error}"></p>
+        </span>
+      </div>
+    </div>
+  </body>
+</html>

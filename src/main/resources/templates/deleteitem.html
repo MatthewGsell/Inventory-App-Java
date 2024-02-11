@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Inventory Manager</h1>
+    </div>
+    <div id="maincontainer">
+      <div id="categories">
+        <h2>Categories:</h2>
+        <ul id="categorylist">
+          <li><a href="/">All Categories</a></li>
+          <li th:each="item: ${categories}">
+            <a
+              th:href="@{/reloadcategory(name=${item.name})}"
+              th:text="${item.name}"
+            ></a>
+          </li>
+        </ul>
+        <a id="addcategorybutton" href="/newcategory">Add Category</a>
+        <a id="additembutton" href="/newitem">Add Item</a>
+        <a id="deletecategorybutton" href="/deletecategory">Delete Category</a>
+        <a id="deleteitembutton" href="/deleteitem">Delete Item</a>
+      </div>
+      <div id="itemscontainer">
+        <a id="home" href="/">Home</a>
+
+        <h3 id="namescontainerlabel">Item Names</h3>
+        <div id="itemnamescontainer">
+          <span th:each="item: ${items}">
+            <p th:text="${item.name}"></p>
+          </span>
+          <form action="/deleteitem" method="post" id="deleteitemform">
+            <input
+              type="text"
+              placeholder="item name"
+              minlength="1"
+              maxlength="30"
+              id="name"
+              name="name"
+            />
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <span th:if="${error}" id="deleteitemerror">
+      <p th:text="${error}"></p>
+    </span>
+  </body>
+</html>
