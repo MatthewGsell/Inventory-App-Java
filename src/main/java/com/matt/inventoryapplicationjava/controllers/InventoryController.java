@@ -50,8 +50,7 @@ import jakarta.validation.Valid;
 @Controller
 public class InventoryController {
 
-    String uri = "mongodb+srv://testuser:5gftthXvh5Wetv2z@cluster0.ncnydoa.mongodb.net/?retryWrites=true&w=majority";
-        
+    String uri = System.getenv("MONGO_URI");
     MongoClient mongoClient = MongoClients.create(uri);
     MongoDatabase database = mongoClient.getDatabase("inventory-app-java");
     MongoCollection<Document> categories = database.getCollection("categories");
