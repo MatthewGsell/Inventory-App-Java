@@ -162,12 +162,20 @@ public class InventoryController {
     }
     @GetMapping("/decreaseitem")
     public String decreaseitem(@RequestParam("name") String itemname, Model model) {
-       items.findOneAndUpdate(eq("name", itemname), Updates.inc("quantity",  - 1));
-       getcategoryanditemlists();
-        model.addAttribute("categories", categorArrayList);
-        model.addAttribute("items", itemArrayList);
+     int currentvalue = items.find(eq("name", itemname)).first().getInteger("quantity");
+        if (currentvalue != 0) {
+            items.findOneAndUpdate(eq("name", itemname), Updates.inc("quantity",  - 1));
+            getcategoryanditemlists();
+            model.addAttribute("categories", categorArrayList);
+            model.addAttribute("items", itemArrayList);
        return "mainpage";
-      
+        } else {
+            getcategoryanditemlists();
+            model.addAttribute("categories", categorArrayList);
+            model.addAttribute("items", itemArrayList);
+            return "mainpage";
+        }
+
     }
     
     
